@@ -1,6 +1,6 @@
 # import the necessary packages
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.applications import AlexNet
 from tensorflow.keras.layers import AveragePooling2D
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Flatten
@@ -8,7 +8,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+from tensorflow.keras.applications.alexnet import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.utils import to_categorical
@@ -49,7 +49,7 @@ for category in CATEGORIES:
     	img_path = os.path.join(path, img)    					# joining the path to corresponding image
     	image = load_img(img_path, target_size=(224, 224))   	# load_img - loads the image path, target size is height and width 															  of the image
     	image = img_to_array(image)            					# saving the image to a varable 'image'
-    	image = preprocess_input(image)        					# preprocess input is coming from mobileNet
+    	image = preprocess_input(image)        					
 
     	data.append(image)
     	labels.append(category)
@@ -80,10 +80,10 @@ aug = ImageDataGenerator(
 	horizontal_flip=True,
 	fill_mode="nearest")
 
-# load the MobileNetV2 network, ensuring the head FC layer sets are
+# load the AlexNet network, ensuring the head FC layer sets are
 # left off
 # input tensor shape of image(rgb = 3)
-baseModel = MobileNetV2(weights="imagenet", include_top=False,
+baseModel = AlexNet(weights="imagenet", include_top=False,
 	input_tensor=Input(shape=(224, 224, 3)))
 
 # construct the head of the model that will be placed on top of the
